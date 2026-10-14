@@ -102,6 +102,10 @@
   .refs { font-size: 14px; list-style: none; margin-left: 0; }
   .refs li { padding-left: 2em; text-indent: -2em; margin-bottom: 9px; }
   .refs li::marker { content: none; }
+  a { color: var(--accent); text-decoration: none; }
+  .refs a { color: var(--muted); border-bottom: 1px dotted var(--accent); }
+  .refs a:hover { color: var(--accent); border-bottom-style: solid; }
+  .ref-link { font-family: 'Pretendard', sans-serif; font-size: 11.5px; white-space: nowrap; }
 
   /* AI 판단 박스 */
   .judge { border: 1px solid var(--warn-line); background: var(--warn-bg); border-radius: 6px; padding: 22px 28px; margin-top: 48px; }
@@ -188,16 +192,16 @@
     <section id="s2">
       <h2 class="sec">2. 관련 연구</h2>
       <ul>
-        <li><strong>Madaan 등(2023)</strong> — Self-Refine: LLM이 자기 출력을 반복 개선하면 7개 과제에서 평균 약 20% 향상. 반복이 결과를 바꾼다는 방향을 뒷받침.</li>
-        <li><strong>Reid·Neubig(2022)</strong> — 텍스트의 '편집 과정'을 이산 편집 연산(Levenshtein 기반)으로 모형화. 측정법의 근거.</li>
-        <li><strong>Levenshtein(1966)</strong> — 문자열 차이를 삽입·삭제·치환 최소 횟수로 재는 편집 거리 제안.</li>
-        <li><strong>Ouyang 등(2022)</strong> — 지시를 따르는 언어모형(InstructGPT). '같은 지시 반복' 방식의 바탕.</li>
-        <li><strong>Huang 등(2024, ICLR)</strong> — 외부 피드백 없는 자기교정이 추론 과제에서 성능을 오히려 낮출 수 있음을 보고. 잔존 진동 해석의 반대쪽 근거.</li>
-        <li><strong>Kamoi 등(2024, TACL)</strong> — 자기교정 비판적 종합조사. 프롬프트만으로는 대부분 실패, 신뢰할 외부 피드백이 있어야 작동.</li>
-        <li><strong>법·제도</strong> — 인공지능기본법(법률 제20676호, 2026.1.22. 시행)의 투명성·고지 의무, EU AI Act 제50조, 저작권법 제2조 제1호.</li>
-        <li><strong>할루시네이션·모델 편차 지표</strong> — TruthfulQA(Lin 등 2022), HaluEval(Li 등 2023), MMLU(Hendrycks 등 2021), Vectara HHEM 리더보드(2026.5: 모델별 1.8%~13%+), Artificial Analysis Intelligence Index·AA-Omniscience(2026.10).</li>
-        <li><strong>PEER(Schick 등 2023, ICLR)</strong> — 계획–편집–설명–반복을 편집 이력으로 학습한 협업 모델. '수정 불필요 상태'까지 반복하는 중단 조건을 내장 — 수렴 개념과 직접 대응.</li>
-        <li><strong>국내 한국어 교정 연구</strong> — 김경은·엄소영(2025, 한말연구, LSTM~GPT-4o 교정 모델 비교), 이다빈(2021, 경기대 석사, KoELECTRA 기반 문법 오류 교정). 둘 다 단일 교정 성능을 다뤄 '반복 수렴'은 본 연구의 새 각도.</li>
+        <li><strong><a href="https://arxiv.org/abs/2303.17651">Madaan 등(2023)</a></strong> — Self-Refine: LLM이 자기 출력을 반복 개선하면 7개 과제에서 평균 약 20% 향상. 반복이 결과를 바꾼다는 방향을 뒷받침.</li>
+        <li><strong><a href="https://aclanthology.org/2022.findings-emnlp.280/">Reid·Neubig(2022)</a></strong> — 텍스트의 '편집 과정'을 이산 편집 연산(Levenshtein 기반)으로 모형화. 측정법의 근거.</li>
+        <li><strong><a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein(1966)</a></strong> — 문자열 차이를 삽입·삭제·치환 최소 횟수로 재는 편집 거리 제안.</li>
+        <li><strong><a href="https://arxiv.org/abs/2203.02155">Ouyang 등(2022)</a></strong> — 지시를 따르는 언어모형(InstructGPT). '같은 지시 반복' 방식의 바탕.</li>
+        <li><strong><a href="https://arxiv.org/abs/2310.01798">Huang 등(2024, ICLR)</a></strong> — 외부 피드백 없는 자기교정이 추론 과제에서 성능을 오히려 낮출 수 있음을 보고. 잔존 진동 해석의 반대쪽 근거.</li>
+        <li><strong><a href="https://aclanthology.org/2024.tacl-1.78/">Kamoi 등(2024, TACL)</a></strong> — 자기교정 비판적 종합조사. 프롬프트만으로는 대부분 실패, 신뢰할 외부 피드백이 있어야 작동.</li>
+        <li><strong>법·제도</strong> — <a href="https://www.law.go.kr/lsInfoP.do?lsiSeq=268543">인공지능기본법</a>(법률 제20676호, 2026.1.22. 시행)의 투명성·고지 의무, <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">EU AI Act</a> 제50조, <a href="https://www.law.go.kr/법령/저작권법">저작권법</a> 제2조 제1호.</li>
+        <li><strong>할루시네이션·모델 편차 지표</strong> — <a href="https://aclanthology.org/2022.acl-long.229/">TruthfulQA</a>(Lin 등 2022), <a href="https://aclanthology.org/2023.emnlp-main.397/">HaluEval</a>(Li 등 2023), <a href="https://arxiv.org/abs/2009.03300">MMLU</a>(Hendrycks 등 2021), <a href="https://github.com/vectara/hallucination-leaderboard">Vectara HHEM 리더보드</a>(2026.5: 모델별 1.8%~13%+), <a href="https://artificialanalysis.ai/models">Artificial Analysis</a> Intelligence Index·AA-Omniscience(2026.10).</li>
+        <li><strong><a href="https://arxiv.org/abs/2208.11663">PEER(Schick 등 2023, ICLR)</a></strong> — 계획–편집–설명–반복을 편집 이력으로 학습한 협업 모델. '수정 불필요 상태'까지 반복하는 중단 조건을 내장 — 수렴 개념과 직접 대응.</li>
+        <li><strong>국내 한국어 교정 연구</strong> — <a href="https://doi.org/10.16876/klrc.2025.66.21.1">김경은·엄소영(2025, 한말연구)</a>, LSTM~GPT-4o 교정 모델 비교; <a href="https://m.riss.kr/search/detail/DetailView.do?control_no=570466b9b64c3ec5ffe0bdc3ef48d419&p_mat_type=be54d9b8bc7cdb09">이다빈(2021, 경기대 석사)</a>, KoELECTRA 기반 문법 오류 교정. 둘 다 단일 교정 성능을 다뤄 '반복 수렴'은 본 연구의 새 각도.</li>
       </ul>
       <p>학술 문헌은 arXiv·ACL Anthology·ICLR proceedings에서 제목 검색으로, 법령은 국가법령정보센터에서, 벤치마크 수치는 Vectara·Artificial Analysis 공개 페이지에서 실재를 직접 확인했다.</p>
     </section>
@@ -361,23 +365,23 @@
     <section id="refs">
       <h2 class="sec">참고문헌</h2>
       <ul class="refs">
-        <li>Madaan, A., Tandon, N., Gupta, P., et al. (2023). Self-Refine: Iterative Refinement with Self-Feedback. <em>NeurIPS 2023</em>.</li>
-        <li>Reid, M., &amp; Neubig, G. (2022). Learning to Model Editing Processes. <em>Findings of EMNLP 2022</em>, 3822–3832.</li>
-        <li>Ouyang, L., Wu, J., Jiang, X., et al. (2022). Training language models to follow instructions with human feedback. <em>NeurIPS 2022</em>.</li>
-        <li>Huang, J., Chen, X., Mishra, S., et al. (2024). Large Language Models Cannot Self-Correct Reasoning Yet. <em>ICLR 2024</em>.</li>
-        <li>Kamoi, R., Zhang, Y., Zhang, N., Han, J., &amp; Zhang, R. (2024). When Can LLMs Actually Correct Their Own Mistakes? A Critical Survey of Self-Correction of LLMs. <em>TACL</em>, 12, 1417–1440.</li>
-        <li>Levenshtein, V. I. (1966). Binary codes capable of correcting deletions, insertions, and reversals. <em>Soviet Physics Doklady</em>, 10(8), 707–710.</li>
-        <li>Lin, S., Hilton, J., &amp; Evans, O. (2022). TruthfulQA: Measuring How Models Mimic Human Falsehoods. <em>ACL 2022</em>.</li>
-        <li>Li, J., Cheng, X., Zhao, W. X., Nie, J.-Y., &amp; Wen, J.-R. (2023). HaluEval: A Large-Scale Hallucination Evaluation Benchmark for Large Language Models. <em>EMNLP 2023</em>.</li>
-        <li>Hendrycks, D., Burns, C., Basart, S., et al. (2021). Measuring Massive Multitask Understanding (MMLU). <em>ICLR 2021</em>.</li>
-        <li>Vectara. (2026). Hallucination Leaderboard (HHEM-2.1). github.com/vectara/hallucination-leaderboard (열람일 2026-10-14).</li>
-        <li>Artificial Analysis. (2026). Intelligence Index v4.3.2 · AA-Omniscience. artificialanalysis.ai/models (열람일 2026-10-14).</li>
-        <li>인공지능 발전과 신뢰 기반 조성 등에 관한 기본법. 법률 제20676호(2025. 1. 21. 제정), 2026. 1. 22. 시행. 국가법령정보센터.</li>
-        <li>European Parliament and Council. (2024). Regulation (EU) 2024/1689 (AI Act), Article 50.</li>
-        <li>저작권법 제2조 제1호(저작물의 정의). 국가법령정보센터.</li>
-        <li>Schick, T., Dwivedi-Yu, J., Jiang, Z., et al. (2023). PEER: A Collaborative Language Model. <em>ICLR 2023</em>.</li>
-        <li>김경은, &amp; 엄소영. (2025). 딥러닝 기반 한국어 맞춤법 교정 모델의 세대별 성능 비교 연구 — LSTM부터 GPT-4o까지. <em>한말연구</em>, 66(21), 1–28. doi:10.16876/klrc.2025.66.21.1</li>
-        <li>이다빈. (2021). 딥러닝 기반의 한국어 문법 오류 교정 모델 연구 (석사학위논문). 경기대학교. RISS.</li>
+        <li>Madaan, A., Tandon, N., Gupta, P., et al. (2023). Self-Refine: Iterative Refinement with Self-Feedback. <em>NeurIPS 2023</em>. <a class="ref-link" href="https://arxiv.org/abs/2303.17651">arXiv ↗</a></li>
+        <li>Reid, M., &amp; Neubig, G. (2022). Learning to Model Editing Processes. <em>Findings of EMNLP 2022</em>, 3822–3832. <a class="ref-link" href="https://aclanthology.org/2022.findings-emnlp.280/">ACL Anthology ↗</a></li>
+        <li>Ouyang, L., Wu, J., Jiang, X., et al. (2022). Training language models to follow instructions with human feedback. <em>NeurIPS 2022</em>. <a class="ref-link" href="https://arxiv.org/abs/2203.02155">arXiv ↗</a></li>
+        <li>Huang, J., Chen, X., Mishra, S., et al. (2024). Large Language Models Cannot Self-Correct Reasoning Yet. <em>ICLR 2024</em>. <a class="ref-link" href="https://arxiv.org/abs/2310.01798">arXiv ↗</a></li>
+        <li>Kamoi, R., Zhang, Y., Zhang, N., Han, J., &amp; Zhang, R. (2024). When Can LLMs Actually Correct Their Own Mistakes? A Critical Survey of Self-Correction of LLMs. <em>TACL</em>, 12, 1417–1440. <a class="ref-link" href="https://aclanthology.org/2024.tacl-1.78/">ACL Anthology ↗</a></li>
+        <li>Levenshtein, V. I. (1966). Binary codes capable of correcting deletions, insertions, and reversals. <em>Soviet Physics Doklady</em>, 10(8), 707–710. <a class="ref-link" href="https://en.wikipedia.org/wiki/Levenshtein_distance">개요 ↗</a></li>
+        <li>Lin, S., Hilton, J., &amp; Evans, O. (2022). TruthfulQA: Measuring How Models Mimic Human Falsehoods. <em>ACL 2022</em>. <a class="ref-link" href="https://aclanthology.org/2022.acl-long.229/">ACL Anthology ↗</a></li>
+        <li>Li, J., Cheng, X., Zhao, W. X., Nie, J.-Y., &amp; Wen, J.-R. (2023). HaluEval: A Large-Scale Hallucination Evaluation Benchmark for Large Language Models. <em>EMNLP 2023</em>. <a class="ref-link" href="https://aclanthology.org/2023.emnlp-main.397/">ACL Anthology ↗</a></li>
+        <li>Hendrycks, D., Burns, C., Basart, S., et al. (2021). Measuring Massive Multitask Understanding (MMLU). <em>ICLR 2021</em>. <a class="ref-link" href="https://arxiv.org/abs/2009.03300">arXiv ↗</a></li>
+        <li>Vectara. (2026). Hallucination Leaderboard (HHEM-2.1). <a class="ref-link" href="https://github.com/vectara/hallucination-leaderboard">github.com ↗</a> (열람일 2026-10-14)</li>
+        <li>Artificial Analysis. (2026). Intelligence Index v4.3.2 · AA-Omniscience. <a class="ref-link" href="https://artificialanalysis.ai/models">artificialanalysis.ai ↗</a> (열람일 2026-10-14)</li>
+        <li>인공지능 발전과 신뢰 기반 조성 등에 관한 기본법. 법률 제20676호(2025. 1. 21. 제정), 2026. 1. 22. 시행. <a class="ref-link" href="https://www.law.go.kr/lsInfoP.do?lsiSeq=268543">국가법령정보센터 ↗</a></li>
+        <li>European Parliament and Council. (2024). Regulation (EU) 2024/1689 (AI Act), Article 50. <a class="ref-link" href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj">EUR-Lex ↗</a></li>
+        <li>저작권법 제2조 제1호(저작물의 정의). <a class="ref-link" href="https://www.law.go.kr/법령/저작권법">국가법령정보센터 ↗</a></li>
+        <li>Schick, T., Dwivedi-Yu, J., Jiang, Z., et al. (2023). PEER: A Collaborative Language Model. <em>ICLR 2023</em>. <a class="ref-link" href="https://arxiv.org/abs/2208.11663">arXiv ↗</a></li>
+        <li>김경은, &amp; 엄소영. (2025). 딥러닝 기반 한국어 맞춤법 교정 모델의 세대별 성능 비교 연구 — LSTM부터 GPT-4o까지. <em>한말연구</em>, 66(21), 1–28. <a class="ref-link" href="https://doi.org/10.16876/klrc.2025.66.21.1">DOI ↗</a> <a class="ref-link" href="https://www.kci.go.kr/kciportal/landing/article.kci?arti_id=ART003204704">KCI ↗</a></li>
+        <li>이다빈. (2021). 딥러닝 기반의 한국어 문법 오류 교정 모델 연구 (석사학위논문). 경기대학교. <a class="ref-link" href="https://m.riss.kr/search/detail/DetailView.do?control_no=570466b9b64c3ec5ffe0bdc3ef48d419&p_mat_type=be54d9b8bc7cdb09">RISS ↗</a></li>
       </ul>
     </section>
 
