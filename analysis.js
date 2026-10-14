@@ -53,6 +53,24 @@ const avg = (xs) => (xs.reduce((a, b) => a + b, 0) / xs.length).toFixed(4);
 const line = [1, 2, 3].map(r =>
   `${r}차 평균 변경률: ${(avg(perRound[r]) * 100).toFixed(2)}%  (범위 ${Math.min(...perRound[r]).toFixed(3)}~${Math.max(...perRound[r]).toFixed(3)})`
 ).join('\n');
+
+// 부호 검정: 전이별 증가/감소/동률 샘플 수
+function signCounts(a, b) {
+  let inc = 0, dec = 0, tie = 0;
+  for (let i = 0; i < 10; i++) {
+    const d = b[i] - a[i];
+    if (d > 0) inc++; else if (d < 0) dec++; else tie++;
+  }
+  return `${dec}감소 / ${inc}증가 / ${tie}동률`;
+}
+const t12 = signCounts(
+  [1,2,3,4,5,6,7,8,9,10].map(i => perRound[1][i-1]),
+  [1,2,3,4,5,6,7,8,9,10].map(i => perRound[2][i-1]));
+const t23 = signCounts(
+  [1,2,3,4,5,6,7,8,9,10].map(i => perRound[2][i-1]),
+  [1,2,3,4,5,6,7,8,9,10].map(i => perRound[3][i-1]));
+
 const dec = [1, 2].map(r => ` ${avg(perRound[r])} → ${avg(perRound[r + 1])}`).join('\n');
 console.log('=== 회차별 평균 변경률 ===\n' + line + '\n\n회차 간 감소:' + dec +
+  `\n\n부호 검정(샘플 단위): 1→2차 ${t12} / 2→3차 ${t23}` +
   `\n\n감소 여부: ${avg(perRound[2]) < avg(perRound[1]) && avg(perRound[3]) < avg(perRound[2]) ? '가설 지지 (매 회차 감소)' : '부분적/기각'}`);
