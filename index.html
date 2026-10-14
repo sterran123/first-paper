@@ -130,7 +130,8 @@
     <a href="#s2">2. 관련 연구</a>
     <a href="#s3">3. 방법</a>
     <a href="#s4">4. 결과</a>
-    <a href="#s5">5. 논의</a>
+    <a href="#s5">5. 고찰</a>
+    <a href="#s6">6. 결론 및 향후 연구</a>
     <a href="#refs">참고문헌</a>
     <a href="#repro">재현 방법</a>
     <a href="#judge">부록 — AI와 나의 판단</a>
@@ -140,9 +141,9 @@
     <header class="cover">
       <p class="series">과제 10 · AI와 함께 쓰는 첫 논문</p>
       <h1>같은 글을 AI가 반복해서 고칠 때,<br>고치는 양은 줄어드는가</h1>
-      <p class="subtitle">— 반복 AI 교정의 수렴과 잔존 진동, 그리고 지시문 자유도의 역할 —</p>
-      <p class="author"><strong>김민기</strong></p>
-      <p class="date">2026년 10월 14일</p>
+      <p class="subtitle">Does the Amount of Revision Decrease When AI Iteratively Edits the Same Text?</p>
+      <p class="author"><strong>김민기</strong> · 리추얼 AI·소프트웨어 과정</p>
+      <p class="date">2026년 10월 14일 · 국내 KCI 학술지 형식 준용</p>
       <div class="rule"></div>
     </header>
 
@@ -150,6 +151,7 @@
       <h2>초 록</h2>
       <p>생성형 AI에게 글 교정을 맡길 때 "한 번 더 고쳐 달라"고 하면 실제로 얼마나 더 고치는지 의문이었다. AI가 고치는 양이 회차마다 줄어든다면 AI 교정에는 수렴 지점이 있다는 뜻이고, 줄지 않는다면 매번 다른 판단을 한다는 뜻이다. 학생 수준의 한국어 짧은 글 10편을 준비해, 같은 교정 지시문을 AI에게 3회 반복 적용하면서 회차별 변경률(입력과 출력의 문자 편집 거리 비율)을 측정했다. 그 결과 평균 변경률은 1차 6.91%, 2차 1.49%, 3차 0.62%로 회차가 지날수록 뚜렷하게 줄었다. 다만 10편 가운데 3편은 2·3차 사이에서 변경률이 소폭 다시 오르는 '잔존 진동'을 보여, AI 교정은 수렴하되 완전히 멈추지는 않는 것으로 나타났다. 대조 실험으로 지시문을 '맞춤법·띄어쓰기만 고치고 문체는 바꾸지 마라'로 제한한 조건 B에서는 1차 교정 후 변경률이 10편 전부 0%로 완전히 수렴해, 수렴 속도와 안정성이 지시문의 편집 자유도에 의해 결정됨을 확인했다.</p>
       <p class="keywords"><b>키워드</b> · 생성형 AI, 반복 교정, 편집 거리, 수렴, 자기교정, 지시문 설계</p>
+      <p style="margin-top:18px;padding-top:16px;border-top:1px dashed var(--rule);font-size:13.5px;color:var(--muted)"><b style="color:var(--ink)">Abstract.</b> Ten short Korean paragraphs were revised by an LLM across three rounds under an identical instruction; the change rate (Levenshtein distance normalized by input length) decreased from 6.91% to 1.49% to 0.62%, supporting convergence, while 3 of 10 samples showed residual oscillation. A control condition restricting edits to spelling and spacing errors reached 0.00% for all samples — convergence is governed by the editorial freedom granted by the instruction. <b>Keywords:</b> LLM, iterative revision, edit distance, convergence, self-correction.</p>
     </section>
 
     <section id="s1">
@@ -175,7 +177,8 @@
       <h3>1.3 가설</h3>
       <blockquote>같은 글을 AI에게 같은 교정 지시로 여러 번 고치게 하면, 회차가 지날수록 고치는 양(변경률)이 줄어든다.</blockquote>
       <ul>
-        <li><strong>인과 구조</strong>: 반복 회차 → 교정 변경률(감소 방향)</li>
+        <li><strong>귀무가설(H0)</strong>: 회차 간 평균 변경률에 차이가 없다 / <strong>대립가설(H1)</strong>: 회차 증가 시 변경률 감소(단측)</li>
+        <li><strong>검정</strong>: 샘플 단위 부호 검정(sign test)</li>
         <li><strong>측정</strong>: Levenshtein 편집 거리 ÷ 입력 문자 수 = 변경률. 보조로 변경 문장 수</li>
         <li><strong>반증 조건</strong>: 회차별 평균 변경률이 줄지 않으면 기각</li>
       </ul>
@@ -193,6 +196,8 @@
         <li><strong>Kamoi 등(2024, TACL)</strong> — 자기교정 비판적 종합조사. 프롬프트만으로는 대부분 실패, 신뢰할 외부 피드백이 있어야 작동.</li>
         <li><strong>법·제도</strong> — 인공지능기본법(법률 제20676호, 2026.1.22. 시행)의 투명성·고지 의무, EU AI Act 제50조, 저작권법 제2조 제1호.</li>
         <li><strong>할루시네이션·모델 편차 지표</strong> — TruthfulQA(Lin 등 2022), HaluEval(Li 등 2023), MMLU(Hendrycks 등 2021), Vectara HHEM 리더보드(2026.5: 모델별 1.8%~13%+), Artificial Analysis Intelligence Index·AA-Omniscience(2026.10).</li>
+        <li><strong>PEER(Schick 등 2023, ICLR)</strong> — 계획–편집–설명–반복을 편집 이력으로 학습한 협업 모델. '수정 불필요 상태'까지 반복하는 중단 조건을 내장 — 수렴 개념과 직접 대응.</li>
+        <li><strong>국내 한국어 교정 연구</strong> — 김경은·엄소영(2025, 한말연구, LSTM~GPT-4o 교정 모델 비교), 이다빈(2021, 경기대 석사, KoELECTRA 기반 문법 오류 교정). 둘 다 단일 교정 성능을 다뤄 '반복 수렴'은 본 연구의 새 각도.</li>
       </ul>
       <p>학술 문헌은 arXiv·ACL Anthology·ICLR proceedings에서 제목 검색으로, 법령은 국가법령정보센터에서, 벤치마크 수치는 Vectara·Artificial Analysis 공개 페이지에서 실재를 직접 확인했다.</p>
     </section>
@@ -268,8 +273,20 @@
         <p class="tbl-note">편집 범위를 규범 오류로 제한하면 1차에서 완전 수렴하고 이후 아무것도 바꾸지 않는다. 진동은 '기준 없는 스타일 영역'에서 발생한다.</p>
       </div>
 
-      <h3>4.4 통계적 요약</h3>
-      <p>샘플 단위 부호 검정으로 보면 1→2차 전이는 10편 중 9편 감소·1편 증가로 방향이 뚜렷하다(p≈0.011). 2→3차는 6편 감소·2편 증가·2편 동률로 우연과 구분되지 않는다(p≈0.15) — 수렴은 대부분 2회차에서 완료되고, 그 이후는 진동 구간이다.</p>
+      <h3>4.4 가설 검정</h3>
+      <p>H0(회차 간 차이 없음) vs H1(회차 증가 시 감소)를 샘플 단위 부호 검정으로 검정했다.</p>
+      <div class="tbl-wrap">
+        <p class="tbl-cap"><b>표 5.</b> 부호 검정 결과</p>
+        <table>
+          <thead><tr><th>전이</th><th>감소/증가/동률</th><th>단측 p</th><th>판정</th></tr></thead>
+          <tbody>
+            <tr><td>A, 1→2차</td><td>9 / 1 / 0</td><td class="num">0.011</td><td><strong>H0 기각</strong></td></tr>
+            <tr><td>A, 2→3차</td><td>6 / 2 / 2</td><td class="num">0.145</td><td>기각 실패 — 진동 구간</td></tr>
+            <tr><td>B, 1→2차</td><td>10 / 0 / 0</td><td class="num">0.001</td><td><strong>H0 기각 — 완전 수렴</strong></td></tr>
+            <tr><td>A vs B, 2차</td><td>A>B 8 / 0 / 2</td><td class="num">0.004</td><td><strong>지시문 제한 효과 유의</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <h3>4.5 원자료 예시</h3>
       <div class="tbl-wrap">
@@ -288,8 +305,8 @@
     </section>
 
     <section id="s5">
-      <h2 class="sec">5. 논의</h2>
-      <h3>5.1 결론</h3>
+      <h2 class="sec">5. 고찰</h2>
+      <h3>5.1 결과의 종합 해석</h3>
       <p>가설은 채택하되 단서를 단다. 같은 지시문으로 AI 교정을 반복하면 고치는 양은 평균적으로 회차마다 줄어 3회차에는 거의 0에 가까워진다 — <em>교정은 수렴한다</em>. 그러나 잔존 진동은 AI가 '완전히 고정된 답'을 만들지 않는다는 뜻이다. 대조 실험(조건 B)은 이 진동의 원인을 보여준다 — 편집 범위를 맞춤법·띄어쓰기라는 외부 규범으로 제한하면 1차에서 변경률 0%로 완전히 수렴하고 진동이 사라진다. 즉 수렴 속도와 안정성은 모델 자체보다 <em>지시문이 허용하는 편집 자유도</em>의 함수다.</p>
 
       <h3>5.2 모델별 편차 — 공개 지표 (2026)</h3>
@@ -327,12 +344,16 @@
 
       <h3>5.4 법적·윤리적 함의</h3>
       <p>2026년 1월 22일 시행된 인공지능기본법(제31조)은 생성형 AI 이용 사실의 고지 등 투명성 확보 조치를 요구한다. AI 교정이 '수렴 후에도 계속 고치는' 특성을 가진다면, 교정 결과를 검토 없이 받아들이는 습관은 'AI 활용에 대한 책임 있는 관리'와 거리가 멀다. 저작권법 제2조 제1호가 저작물을 '인간의 사상 또는 감정을 표현한 창작물'로 정의하므로, AI가 임의로 다시 바꾼 부분(잔존 진동 구간)이 작성자의 표현으로 인정될지는 별도 판단이 필요하다.</p>
+    </section>
 
-      <h3>5.5 한계</h3>
+    <section id="s6">
+      <h2 class="sec">6. 결론 및 향후 연구</h2>
+      <p>같은 지시문으로 AI 교정을 반복하면 고치는 양은 회차마다 유의하게 줄어(1→2차, p≈0.011) 대부분 2회차에서 수렴했으나, 자유도가 있는 지시문에서는 10편 중 3편이 수렴 후에도 작은 재편집을 반복하는 잔존 진동을 보였다. 편집 범위를 규범 오류로 제한한 대조 조건에서는 모든 샘플이 1차에서 완전 수렴해, 수렴의 안정성이 지시문의 편집 자유도에 의해 결정됨을 확인했다. 향후 연구로는 실제 학습자 말뭉치·다중 모델로의 확장, 편집의 '양'이 아닌 '정당성' 평가, 4회차 이상의 장기 수렴 관측이 필요하다.</p>
+      <h3>한계</h3>
       <ul>
-        <li>한국어 짧은 문단 10편뿐 — 긴 글·영어에 일반화 불가</li>
+        <li>AI가 작성한 한국어 짧은 문단 10편뿐 — 실제 학습자 글·긴 글·영어에 일반화 불가</li>
         <li>3회차까지만 관측 — 그 이후의 완전 수렴 여부는 미지</li>
-        <li>단일 모델·두 지시문 — 다른 모델은 같은 방식으로 별도 측정 필요</li>
+        <li>단일 모델·두 지시문 — 다른 모델은 같은 방식의 별도 측정 필요</li>
         <li>변경률은 '얼마나'만 재고 '얼마나 잘'은 재지 않음</li>
       </ul>
     </section>
@@ -354,6 +375,9 @@
         <li>인공지능 발전과 신뢰 기반 조성 등에 관한 기본법. 법률 제20676호(2025. 1. 21. 제정), 2026. 1. 22. 시행. 국가법령정보센터.</li>
         <li>European Parliament and Council. (2024). Regulation (EU) 2024/1689 (AI Act), Article 50.</li>
         <li>저작권법 제2조 제1호(저작물의 정의). 국가법령정보센터.</li>
+        <li>Schick, T., Dwivedi-Yu, J., Jiang, Z., et al. (2023). PEER: A Collaborative Language Model. <em>ICLR 2023</em>.</li>
+        <li>김경은, &amp; 엄소영. (2025). 딥러닝 기반 한국어 맞춤법 교정 모델의 세대별 성능 비교 연구 — LSTM부터 GPT-4o까지. <em>한말연구</em>, 66(21), 1–28. doi:10.16876/klrc.2025.66.21.1</li>
+        <li>이다빈. (2021). 딥러닝 기반의 한국어 문법 오류 교정 모델 연구 (석사학위논문). 경기대학교. RISS.</li>
       </ul>
     </section>
 
