@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>같은 글을 AI가 반복해서 고칠 때, 고치는 양은 줄어드는가</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', -apple-system, 'Malgun Gothic', sans-serif; color: #1d1d1f; background: #fbfbfd; line-height: 1.75; }
+  .page { max-width: 760px; margin: 0 auto; padding: 64px 24px 96px; }
+  .cover { border-bottom: 1px solid #d2d2d7; padding-bottom: 40px; margin-bottom: 40px; }
+  .kicker { font-size: 13px; letter-spacing: .08em; color: #6e6e73; text-transform: uppercase; margin-bottom: 12px; }
+  h1 { font-size: 32px; line-height: 1.3; letter-spacing: -.02em; }
+  .meta { margin-top: 16px; color: #6e6e73; font-size: 15px; }
+  h2 { font-size: 22px; margin: 48px 0 16px; letter-spacing: -.01em; }
+  h3 { font-size: 17px; margin: 32px 0 10px; color: #333; }
+  p { margin-bottom: 14px; font-size: 16px; }
+  blockquote { border-left: 3px solid #0071e3; padding: 12px 18px; background: #f5f5f7; margin: 16px 0; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14.5px; }
+  th, td { padding: 10px 12px; border: 1px solid #d2d2d7; text-align: left; }
+  th { background: #f5f5f7; font-weight: 600; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .hl td { background: #fff8e6; }
+  ul, ol { margin: 0 0 14px 22px; }
+  li { margin-bottom: 8px; font-size: 16px; }
+  code { background: #f5f5f7; padding: 2px 6px; border-radius: 4px; font-size: 14px; }
+  .fig { background: #fff; border: 1px solid #e8e8ed; border-radius: 14px; padding: 24px; margin: 20px 0; }
+  .bar-row { display: flex; align-items: center; gap: 12px; margin: 10px 0; }
+  .bar-label { width: 40px; font-size: 14px; color: #6e6e73; flex-shrink: 0; }
+  .bar { height: 26px; border-radius: 6px; background: #0071e3; display: flex; align-items: center; padding-left: 10px; color: #fff; font-size: 13px; font-weight: 600; }
+  .files { font-size: 14px; color: #6e6e73; }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid #d2d2d7; font-size: 13px; color: #86868b; }
+  .badge { display: inline-block; font-size: 12px; background: #e8f0fb; color: #0071e3; padding: 3px 10px; border-radius: 999px; margin-right: 6px; }
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="cover">
+    <p class="kicker">Research Paper · 과제 10</p>
+    <h1>같은 글을 AI가 반복해서 고칠 때,<br>고치는 양은 줄어드는가</h1>
+    <p class="meta">김민기 · 2026년 10월 14일</p>
+  </header>
+
+  <section>
+    <h2>초록</h2>
+    <p>생성형 AI에게 글 교정을 맡길 때 "한 번 더 고쳐 달라"고 하면 실제로 얼마나 더 고치는지 의문이었다. AI가 고치는 양이 회차마다 줄어든다면 AI 교정에는 수렴 지점이 있다는 뜻이고, 줄지 않는다면 매번 다른 판단을 한다는 뜻이다. 학생 수준의 한국어 짧은 글 10편을 준비해, 같은 교정 지시문을 AI에게 3회 반복 적용하면서 회차별 변경률(입력과 출력의 문자 편집 거리 비율)을 측정했다. 그 결과 평균 변경률은 1차 6.91%, 2차 1.49%, 3차 0.62%로 회차가 지날수록 뚜렷하게 줄었다. 다만 10편 가운데 3편은 2·3차 사이에서 변경률이 소폭 다시 오르는 '잔존 진동'을 보여, AI 교정은 수렴하되 완전히 멈추지는 않는 것으로 나타났다.</p>
+    <p><span class="badge">생성형 AI</span><span class="badge">반복 교정</span><span class="badge">편집 거리</span><span class="badge">수렴</span></p>
+  </section>
+
+  <section>
+    <h2>1. 서론</h2>
+    <h3>1.1 문제의식</h3>
+    <p>AI에게 글을 고치게 해 보면 한 번에 다 고치는 것 같다가도, 다시 시키면 또 어딘가를 바꾼다. 그렇다면 AI 교정은 '더 고칠 게 없는 지점'에 도달하는가, 아니면 지시를 받을 때마다 계속 뭔가를 고치는가. 수렴한다면 몇 번까지만 시키면 되고, 수렴하지 않는다면 무한 반복은 오히려 글을 불필요하게 건드릴 수 있다.</p>
+    <h3>1.2 후보 주제 검토와 선정</h3>
+    <p>관심 분야는 "생성형 AI가 글쓰기 보조 작업에서 얼마나 일관되게 일하는가"이다.</p>
+    <table>
+      <tr><th>후보</th><th>측정 가능성</th><th>판단</th></tr>
+      <tr><td>패스키 vs 비밀번호 로그인 시간</td><td>스톱워치 측정 가능</td><td>내 손 숙련도가 결과를 오염시켜 접음</td></tr>
+      <tr><td>리추얼 기록 자기 평가 분석</td><td>22일 기록 감정 점수화</td><td>표본이 적고 긍정성 판정이 주관적이라 접음</td></tr>
+      <tr><td>AI 답변 품질(예시 유무)</td><td>두 조건 실행 가능</td><td>'실용성' 평가가 주관적이라 접음</td></tr>
+      <tr class="hl"><td><strong>AI 반복 교정 수렴</strong></td><td>편집 거리로 기계 측정</td><td><strong>채택 — 측정이 객관적</strong></td></tr>
+    </table>
+    <h3>1.3 가설</h3>
+    <blockquote>같은 글을 AI에게 같은 교정 지시로 여러 번 고치게 하면, 회차가 지날수록 고치는 양(변경률)이 줄어든다.</blockquote>
+    <ul>
+      <li><strong>인과 구조</strong>: 반복 회차 → 교정 변경률(감소 방향)</li>
+      <li><strong>측정</strong>: Levenshtein 편집 거리 ÷ 입력 문자 수 = 변경률. 보조로 변경 문장 수</li>
+      <li><strong>반증 조건</strong>: 회차별 평균 변경률이 줄지 않으면 기각</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>2. 관련 연구</h2>
+    <ul>
+      <li><strong>Madaan 등(2023)</strong> — Self-Refine: LLM이 자기 출력을 반복 개선하면 7개 과제에서 평균 약 20% 향상. 반복이 결과를 바꾼다는 방향을 뒷받침.</li>
+      <li><strong>Reid·Neubig(2022)</strong> — 텍스트의 '편집 과정'을 이산 편집 연산(Levenshtein 기반)으로 모형화. 측정법의 근거.</li>
+      <li><strong>Levenshtein(1966)</strong> — 문자열 차이를 삽입·삭제·치환 최소 횟수로 재는 편집 거리 제안.</li>
+      <li><strong>Ouyang 등(2022)</strong> — 지시를 따르는 언어모형(InstructGPT). '같은 지시 반복' 방식의 바탕.</li>
+    </ul>
+    <p>네 문헌 모두 arXiv·ACL Anthology에서 제목 검색으로 실재를 직접 확인했다.</p>
+  </section>
+
+  <section>
+    <h2>3. 방법</h2>
+    <table>
+      <tr><th>구분</th><th>내용</th></tr>
+      <tr><td>바꾸는 조건</td><td>교정 회차 (1차 → 2차 → 3차, 각 회차 입력 = 직전 출력)</td></tr>
+      <tr><td>고정 조건</td><td>교정 지시문, 텍스트 10편, 건당 새 AI 세션</td></tr>
+      <tr><td>교정 지시문</td><td>"맞춤법·띄어쓰기·어색한 표현 중심으로 다듬어라. 의미와 분량·문체는 유지."</td></tr>
+      <tr><td>표본</td><td>한국어 문단 10편(146~183자) × 3회차 = 교정 30건</td></tr>
+      <tr><td>측정 값</td><td>회차별 변경률, 변경 문장 수</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>4. 결과</h2>
+    <div class="fig">
+      <div class="bar-row"><span class="bar-label">1차</span><div class="bar" style="width:78%">6.91%</div></div>
+      <div class="bar-row"><span class="bar-label">2차</span><div class="bar" style="width:17%">1.49%</div></div>
+      <div class="bar-row"><span class="bar-label">3차</span><div class="bar" style="width:8%">0.62%</div></div>
+    </div>
+    <table>
+      <tr><th>샘플</th><th>1차</th><th>2차</th><th>3차</th><th>형태</th></tr>
+      <tr><td>s01</td><td class="num">9.30%</td><td class="num">0.55%</td><td class="num">0.00%</td><td>수렴</td></tr>
+      <tr><td>s02</td><td class="num">8.22%</td><td class="num">2.84%</td><td class="num">2.80%</td><td>정체</td></tr>
+      <tr><td>s03</td><td class="num">7.27%</td><td class="num">0.57%</td><td class="num">0.56%</td><td>정체</td></tr>
+      <tr><td>s04</td><td class="num">4.62%</td><td class="num">0.00%</td><td class="num">0.00%</td><td>완전 수렴</td></tr>
+      <tr class="hl"><td>s05</td><td class="num">9.09%</td><td class="num">1.14%</td><td class="num">1.15%</td><td>잔존 진동</td></tr>
+      <tr class="hl"><td>s06</td><td class="num">2.92%</td><td class="num">3.45%</td><td class="num">0.56%</td><td>2차 상승 후 수렴</td></tr>
+      <tr class="hl"><td>s07</td><td class="num">8.00%</td><td class="num">0.55%</td><td class="num">1.09%</td><td>잔존 진동</td></tr>
+      <tr><td>s08</td><td class="num">4.12%</td><td class="num">2.29%</td><td class="num">0.00%</td><td>수렴</td></tr>
+      <tr><td>s09</td><td class="num">8.81%</td><td class="num">0.00%</td><td class="num">0.00%</td><td>완전 수렴</td></tr>
+      <tr><td>s10</td><td class="num">6.79%</td><td class="num">3.55%</td><td class="num">0.00%</td><td>수렴</td></tr>
+    </table>
+    <p>모든 샘플에서 1차 변경률이 가장 크고 회차마다 급감해 가설은 지지된다. 다만 3편(s05·s06·s07)은 회차 사이에 변경률이 되오르는 '잔존 진동'을 보였다 — AI가 수렴 후에도 새로 작은 판단을 계속한다는 뜻이다.</p>
+  </section>
+
+  <section>
+    <h2>5. 논의</h2>
+    <h3>5.1 결론</h3>
+    <p>가설은 채택하되 단서를 단다. 같은 지시문으로 AI 교정을 반복하면 고치는 양은 평균적으로 회차마다 줄어 3회차에는 거의 0에 가까워진다 — 교정은 수렴한다. 그러나 잔존 진동은 AI가 완전히 고정된 답을 만들지 않는다는 뜻이다. 실용적으로는 2회차까지 반복하면 변경의 약 9할이 처리되고, 그 이후는 미세 조정 구간이다. 수렴은 '더 바꿀 것을 못 찾는다'는 뜻이지 글의 질을 보증하는 것은 아니다.</p>
+    <h3>5.2 한계</h3>
+    <ul>
+      <li>한국어 짧은 문단 10편뿐 — 긴 글·영어에 일반화 불가</li>
+      <li>3회차까지만 관측 — 그 이후의 완전 수렴 여부는 미지</li>
+      <li>단일 모델·단일 지시문</li>
+      <li>변경률은 '얼마나'만 재고 '얼마나 잘'은 재지 않음</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>참고문헌</h2>
+    <ul>
+      <li>Madaan, A., et al. (2023). Self-Refine: Iterative Refinement with Self-Feedback. <em>NeurIPS 2023</em>.</li>
+      <li>Reid, M., &amp; Neubig, G. (2022). Learning to Model Editing Processes. <em>Findings of EMNLP 2022</em>, 3822–3832.</li>
+      <li>Ouyang, L., et al. (2022). Training language models to follow instructions with human feedback. <em>NeurIPS 2022</em>.</li>
+      <li>Levenshtein, V. I. (1966). Binary codes capable of correcting deletions, insertions, and reversals. <em>Soviet Physics Doklady</em>, 10(8).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>재현 방법</h2>
+    <ol>
+      <li><code>data/samples/</code>의 10개 텍스트를 준비한다.</li>
+      <li>각 파일에 지시문을 붙여 AI에게 1차 교정을 시키고 저장한다.</li>
+      <li>그 출력을 입력으로 같은 지시를 2·3차 반복한다.</li>
+      <li><code>node analysis.js</code>를 실행하면 회차별 평균 변경률이 출력된다.</li>
+    </ol>
+    <p class="files">원자료 전체(입력 10건 + 회차별 출력 30건 + 측정표)와 분석 스크립트가 <code>reproduction-package.zip</code>에 함께 들어 있다.</p>
+  </section>
+
+  <footer>
+    <p>과제 10 · AI와 함께 쓰는 첫 논문 — github.com/sterran123/first-paper</p>
+  </footer>
+</main>
+</body>
+</html>
