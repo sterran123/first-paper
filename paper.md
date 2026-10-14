@@ -3,7 +3,7 @@
 **Does the Amount of Revision Decrease When AI Iteratively Edits the Same Text?**
 *— Convergence and Residual Oscillation in Repeated LLM-Based Korean Text Revision —*
 
-**저자**: 김민기 (리추얼 AI·소프트웨어 과정)
+**저자**: 김민기 (AGI 시대를 위한 SKT 기반 AI Infra Re-Skilling Program)
 **작성일**: 2026년 10월 14일
 **양식**: 국내 KCI 학술지 형식(국문초록·영문초록 병기, 서론–관련연구–방법–결과–고찰–결론 구조)에 준함
 
